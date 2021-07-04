@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   //Emit all list
   //io.emit('computer', computers);
-  var clientIp = socket.request.connection.remoteAddress.substring(7);
+  var clientIp = socket.request.connection.remoteAddress;
   let exist = false;
 
   //check if computer exist in list, if already, just change status to "connected"
