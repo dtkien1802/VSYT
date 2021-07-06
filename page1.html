@@ -117,7 +117,7 @@
         //get the list
         socket.on('computer', function(computers) {
             for(let i = 0; i<computers.length; i++){
-                if(computers[i][0]<10){
+                if(computers[i][0]>10){
                 var table = document.getElementById("myTable");
                 var row = table.insertRow(-1);
                 var computerIP = row.insertCell(0);

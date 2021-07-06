@@ -5,9 +5,16 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+
 const computers = [];
 
 app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+app.get('/page1.html', (req, res) => {
+  res.sendFile(__dirname + '/page1.html');
+});
+app.get('/index.html', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
@@ -15,12 +22,15 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
   //Emit all list
   //io.emit('computer', computers);
-  var clientIp = socket.request.connection.remoteAddress;
+  socket.on("name", function(x) {
+    console.log(x);
+  
+  var clientIp = socket.request.connection.remoteAddress.substring(7);
   let exist = false;
 
   //check if computer exist in list, if already, just change status to "connected"
   for(let i=0; i<computers.length; i++) {
-    if(computers[i][0] == clientIp) {
+    if(computers[i][0] == x) {
       exist = true;
       computers[i][7] = "connected";
       break;
@@ -30,17 +40,33 @@ io.on('connection', (socket) => {
   //if not exist, create new
   if(exist == false){
     //[ip, username, password, videolist[], comment[], time[], option[], status]
-    const computer = [clientIp, "none", "none", [{
+    const computer = [x, "none", "none", [{
       "search": "none",
       "title": "none",
       "watch": "none"
     }], ["none"], "none", "none", "connected"];
     computers.push(computer);  
-  }
+    }
+  
+  //disconnect
+  socket.on('disconnect', () => {
+    //console.log(clientIp + ' disconnected');
+    //io.emit('computerdis', clientIp);
+    let i = 0;
+    for(i=0; i<computers.length; i++) {
+      if(x == computers[i][0]) {
+        computers[i][7] = "disconnected";
+        break;
+      }
+    }
+    console.log(computers[i]);
+  });
+
+  });
 
   //debugging
-  console.log(computers.length);
-  console.log(computers[computers.length-1]);
+  console.log("ok: " + computers.length);
+  //console.log(computers[computers.length-1]);
 
   //update all
   socket.on('update', function(data) {
@@ -177,23 +203,12 @@ io.on('connection', (socket) => {
     }
   });
 
-  //disconnect
-  socket.on('disconnect', () => {
-    //console.log(clientIp + ' disconnected');
-    //io.emit('computerdis', clientIp);
-    let i = 0;
-    for(i=0; i<computers.length; i++) {
-      if(clientIp == computers[i][0]) {
-        computers[i][7] = "disconnected";
-        break;
-      }
-    }
-    console.log(computers[i]);
-  });
+  
 
   io.emit('computer', computers);
+
 });
 
-server.listen(process.env.PORT || 3000, () => {
+server.listen(3000, () => {
   console.log('listening on *:3000');
 });
