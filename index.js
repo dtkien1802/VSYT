@@ -24,8 +24,6 @@ io.on('connection', (socket) => {
   //io.emit('computer', computers);
   socket.on("name", function(x) {
     console.log("computer: "+x);
-  
-  var clientIp = socket.request.connection.remoteAddress.substring(7);
   let exist = false;
 
   //check if computer exist in list, if already, just change status to "connected"
@@ -55,7 +53,7 @@ io.on('connection', (socket) => {
     let i = 0;
     for(i=0; i<computers.length; i++) {
       if(x == computers[i][0]) {
-        computers[i][7] = "disconnected";
+        computers[i][7] = computers[i][7] + "\n" +"disconnected";
         break;
       }
     }
@@ -75,7 +73,7 @@ io.on('connection', (socket) => {
     for(i=0; i<computers.length; i++) {
       if(computers[i][0] == name) {
         if(status=="CB"){
-          computers[i][7] = computers[i][7]+status;
+          computers[i][7] = computers[i][7]+"\n"+"connected";
           break;
         }
         computers[i][7] = status;
@@ -229,6 +227,7 @@ io.on('connection', (socket) => {
 
 });
 
+//  process.env.PORT || 3000
 server.listen(process.env.PORT || 3000, () => {
   console.log('listening on *:3000');
 });
