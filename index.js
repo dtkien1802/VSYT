@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
   //Emit all list
   //io.emit('computer', computers);
   socket.on("name", function(x) {
-    console.log(x);
+    console.log("computer: "+x);
   
   var clientIp = socket.request.connection.remoteAddress.substring(7);
   let exist = false;
@@ -68,8 +68,28 @@ io.on('connection', (socket) => {
   console.log("ok: " + computers.length);
   //console.log(computers[computers.length-1]);
 
+  //update status
+  socket.on('status', function (name, status) {
+    console.log(status);
+    let i=0;
+    for(i=0; i<computers.length; i++) {
+      if(computers[i][0] == name) {
+        if(status=="CB"){
+          computers[i][7] = computers[i][7]+status;
+          break;
+        }
+        computers[i][7] = status;
+        //console.log(status+"      "+name);
+        break;
+      }
+    }
+    //console.log(status+"      "+name);
+    io.emit('statusupdate', name, computers[i][7]);
+  })
+
+
   //update all
-  socket.on('update', function(data) {
+  socket.on('update', function (data) {
     let i = 0;
     for(i=0; i<computers.length; i++) {
       if(computers[i][0] == data.ipaddr) {
@@ -205,7 +225,7 @@ io.on('connection', (socket) => {
 
   
 
-  io.emit('computer', computers);
+  socket.emit('computer', computers);
 
 });
 

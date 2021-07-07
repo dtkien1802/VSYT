@@ -117,7 +117,8 @@
         //get the list
         socket.on('computer', function(computers) {
             for(let i = 0; i<computers.length; i++){
-                if(computers[i][0]<10){
+                console.log(computers[i][0].substring(0, 5));
+                if(computers[i][0].substring(0, 5)=="NET01"){
                 var table = document.getElementById("myTable");
                 var row = table.insertRow(-1);
                 var computerIP = row.insertCell(0);
@@ -145,7 +146,7 @@
                 comment.innerHTML = "<p id=\"curcomment"+computers[i][0]+"\" class=\"col-sm-12\">"+commentlist+"</p><textarea class=\"col-sm-12\" id=\"comment"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
                 option.innerHTML = "<p id=\"curoption"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][6]+"</p><textarea class=\"col-sm-12\" id=\"option"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
                 time.innerHTML = "<p id=\"curtime"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][5]+"</p><input class=\"col-sm-12\" id=\"time"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">"
-                status.innerHTML = computers[i][7];
+                status.innerHTML = "<p id=\"status"+computers[i][0]+"\">" + computers[i][7]+"</p>";
                 button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button class=\"col-12\">Dừng</button>"
             }
             }
@@ -226,6 +227,12 @@
                 socket.emit('actionFile', res);
             }
             fr.readAsText(this.files[0]);
+        })
+
+        //update status
+        socket.on("statusupdate", function(name, status) {
+            document.getElementById("status"+name).innerHTML=status;
+            console.log("mes: "+status+"     "+name);
         })
     </script>
 </html>
