@@ -147,7 +147,7 @@
                 option.innerHTML = "<p id=\"curoption"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][6]+"</p><textarea class=\"col-sm-12\" id=\"option"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
                 time.innerHTML = "<p id=\"curtime"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][5]+"</p><input class=\"col-sm-12\" id=\"time"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">"
                 status.innerHTML = "<p id=\"status"+computers[i][0]+"\" class=\"col-sm-12\">" + computers[i][7]+"</p>";
-                button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button onclick=\"stop(this.id)\" class=\"col-12\">Dừng</button>"
+                button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button id=\""+computers[i][0]+"\" onclick=\"stop(this.id)\" class=\"col-12\">Dừng</button>"
             }
             }
         });

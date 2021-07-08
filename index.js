@@ -71,7 +71,7 @@ io.on('connection', (socket) => {
   // stop
   socket.on('stop', function (idno) {
     io.emit('stopnow', idno);
-    console.log("Tat maoooo");
+    console.log("Tat maoooo" + idno);
   })
 
   //update status
