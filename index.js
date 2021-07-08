@@ -70,7 +70,8 @@ io.on('connection', (socket) => {
 
   // stop
   socket.on('stop', function (idno) {
-    socket.emit('stopnow', idno);
+    io.emit('stopnow', idno);
+    console.log("Tat maoooo");
   })
 
   //update status
