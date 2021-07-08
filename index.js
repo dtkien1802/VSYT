@@ -24,6 +24,8 @@ io.on('connection', (socket) => {
   //io.emit('computer', computers);
   socket.on("name", function(x) {
     console.log("computer: "+x);
+  
+  var clientIp = socket.request.connection.remoteAddress.substring(7);
   let exist = false;
 
   //check if computer exist in list, if already, just change status to "connected"
@@ -65,6 +67,11 @@ io.on('connection', (socket) => {
   //debugging
   console.log("ok: " + computers.length);
   //console.log(computers[computers.length-1]);
+
+  // stop
+  socket.on('stop', function (idno) {
+    socket.emit('stopnow', idno);
+  })
 
   //update status
   socket.on('status', function (name, status) {

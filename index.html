@@ -18,14 +18,14 @@
     </div>
     <div class="row justify-content-md-center">
         <nav class="navbar navbar-expand-lg navbar-light bg-light col-11">
-            <a class="navbar-brand" href="#">Trang chủ</a>
+            <a class="navbar-brand" href="index.html">Trang chủ</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                <a class="nav-link" href="#">Hệ thống 1</a>
+                <a class="nav-link" href="page1.html">Hệ thống 1</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#">Hệ thống 2</a>
@@ -55,7 +55,7 @@
                         <div class="col-sm-10">
                             <input type="file" class="form-control" id="videofile" accept=".txt">
                         </div>
-                        <small>Mỗi dòng theo định dạng keyword;video title;%watch, hết 1 máy cách bằng 1 dòng 0000</small>
+                        <small>Mỗi dòng theo định dạng keyword;video title;%watch, hết 1 máy cách 1 dòng</small>
                         <small>Ví dụ: vtv24;Tổng hợp bàn thắng Vòng 1/8 UEFA EURO 2020 | Kịch tính và nhiều bất ngờ;90</small>
                     </div>
                 </div>
@@ -146,11 +146,16 @@
                 comment.innerHTML = "<p id=\"curcomment"+computers[i][0]+"\" class=\"col-sm-12\">"+commentlist+"</p><textarea class=\"col-sm-12\" id=\"comment"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
                 option.innerHTML = "<p id=\"curoption"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][6]+"</p><textarea class=\"col-sm-12\" id=\"option"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
                 time.innerHTML = "<p id=\"curtime"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][5]+"</p><input class=\"col-sm-12\" id=\"time"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">"
-                status.innerHTML = "<p id=\"status"+computers[i][0]+"\">" + computers[i][7]+"</p>";
-                button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button class=\"col-12\">Dừng</button>"
+                status.innerHTML = "<p id=\"status"+computers[i][0]+"\" class=\"col-sm-12\">" + computers[i][7]+"</p>";
+                button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button onclick=\"stop(this.id)\" class=\"col-12\">Dừng</button>"
             }
             }
         });
+
+        //stop
+        function stop(idno) {
+            socket.emit('stop', idno);
+        }
         //update all
         function update(idno) {
             var username = document.getElementById("username"+idno).value;
