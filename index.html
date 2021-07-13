@@ -118,7 +118,7 @@
         socket.on('computer', function(computers) {
             for(let i = 0; i<computers.length; i++){
                 console.log(computers[i][0].substring(0, 5));
-                if(computers[i][0].substring(0, 5)=="NET01"){
+                //if(computers[i][0].substring(0, 5)=="NET01"){
                 var table = document.getElementById("myTable");
                 var row = table.insertRow(-1);
                 var computerIP = row.insertCell(0);
@@ -148,7 +148,7 @@
                 time.innerHTML = "<p id=\"curtime"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][5]+"</p><input class=\"col-sm-12\" id=\"time"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">"
                 status.innerHTML = "<p id=\"status"+computers[i][0]+"\" class=\"col-sm-12\">" + computers[i][7]+"</p>";
                 button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button id=\""+computers[i][0]+"\" onclick=\"stop(this.id)\" class=\"col-12\">Dừng</button>"
-            }
+            
             }
         });
 
