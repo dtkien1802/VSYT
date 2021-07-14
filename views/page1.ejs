@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body style="background-color: black; color: white">
+    <div class="container mb-5 mt-5">
+        <div class="text-center">
+            <h1>CONFIGURATION PAGE</h1>
+        </div>
+    </div>
+    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/inputField.ejs') %>
+
+    <div class="">
+        <div class="col-10"></div>
+        <table class="table table-dark table-striped table-hover table-bordered" id="myTable">
+            <tr>
+                <th class="col-1">Máy</th>
+                <th class="col-1">Username</th>
+                <th class="col-1">Password</th>
+                <th class="col-4">Keyword - Video title - %watch</th>
+                <th class="col-2">Comment</th>
+                <th class="col-2">Tuỳ chọn</th>
+                <td class="col-1">Thời gian</td>
+                <td class="col-1">Trạng thái</td>
+                <th class="col-1"></th>
+        </table>
+        </div>
+    </div>
+
+</body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        //get the list
+        socket.on('computer', function(computers) {
+            for(let i = 0; i<computers.length; i++){
+                console.log(computers[i][0].substring(0, 5));
+                if(computers[i][0].substring(0, 5)=="NET01"){
+                var table = document.getElementById("myTable");
+                var row = table.insertRow(-1);
+                var computerIP = row.insertCell(0);
+                var username = row.insertCell(1);
+                var password = row.insertCell(2);
+                var videoList = row.insertCell(3);
+                var comment = row.insertCell(4);
+                var option = row.insertCell(5);
+                var time = row.insertCell(6);
+                var status = row.insertCell(7);
+                var button = row.insertCell(8);
+                computerIP.innerHTML = computers[i][0];
+                let list = "";
+                for(let j = 0; j<computers[i][3].length; j++) {
+                    list=list+"<p>"+computers[i][3][j].search+" "+computers[i][3][j].title+" "+computers[i][3][j].watch + "<\p>";
+                }
+                let commentlist = "";
+                for(let j = 0; j<computers[i][4].length; j++) {
+                    commentlist=commentlist+"<p>"+computers[i][4][j] + "<\p>";
+                }
+                //[ip, username, password, videolist, comment, option, status]
+                username.innerHTML = "<p id=\"curusername"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][1]+"</p><input class=\"col-sm-12\" id=\"username"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">";
+                password.innerHTML = "<p id=\"curpassword"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][2]+"</p><input class=\"col-sm-12\" id=\"password"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">";
+                videoList.innerHTML = "<p id=\"curlist"+computers[i][0]+"\" class=\"col-sm-12\">"+list+"</p><textarea class=\"col-sm-12\" id=\"list"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
+                comment.innerHTML = "<p id=\"curcomment"+computers[i][0]+"\" class=\"col-sm-12\">"+commentlist+"</p><textarea class=\"col-sm-12\" id=\"comment"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
+                option.innerHTML = "<p id=\"curoption"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][6]+"</p><textarea class=\"col-sm-12\" id=\"option"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\"></textarea>";
+                time.innerHTML = "<p id=\"curtime"+computers[i][0]+"\" class=\"col-sm-12\">"+computers[i][5]+"</p><input class=\"col-sm-12\" id=\"time"+computers[i][0]+"\" type=\"text\" autocomplete=\"off\">"
+                status.innerHTML = "<p id=\"status"+computers[i][0]+"\" class=\"col-sm-12\">" + computers[i][7]+"</p>";
+                button.innerHTML = "<button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\""+computers[i][0]+"\"onclick=\"run(this.id)\">Chạy!</button><button id=\""+computers[i][0]+"\" onclick=\"stop(this.id)\" class=\"col-12\">Dừng</button>"
+                }
+            }
+        });
+        </script>
+        <%- include('./partials/communicate.ejs') %>
+</html>

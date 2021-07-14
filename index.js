@@ -5,17 +5,42 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+app.set('view engine', 'ejs');
 
 const computers = [];
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.render('index');
 });
-app.get('/page1.html', (req, res) => {
-  res.sendFile(__dirname + '/page1.html');
+app.get('/page1', (req, res) => {
+  res.render('page1');
 });
-app.get('/index.html', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+app.get('/page2', (req, res) => {
+  res.render('page2');
+});
+app.get('/page3', (req, res) => {
+  res.render('page3');
+});
+app.get('/page4', (req, res) => {
+  res.render('page4');
+});
+app.get('/page5', (req, res) => {
+  res.render('page5');
+});
+app.get('/page6', (req, res) => {
+  res.render('page6');
+});
+app.get('/page7', (req, res) => {
+  res.render('page7');
+});
+app.get('/page8', (req, res) => {
+  res.render('page8');
+});
+app.get('/page9', (req, res) => {
+  res.render('page9');
+});
+app.get('/page10', (req, res) => {
+  res.render('page10');
 });
 
 //when a new connection
@@ -183,8 +208,9 @@ io.on('connection', (socket) => {
     for(let i=0; i<n; i++) {
       var list = res[i].split("\r\n");
       var array = [];
+      console.log(list);
       // loop through each line
-      for(let j=0; j<list.length-1; j++){
+      for(let j=0; j<list.length; j++){
         var pair = list[j].split(";");
 
           var obj = {
@@ -193,7 +219,7 @@ io.on('connection', (socket) => {
             "watch": pair[2]
           }
           array.push(obj);
-        
+        //console.log(obj);
       }
       //console.dir("Hello" + array);
       computers[i][3] = array;
