@@ -12,6 +12,9 @@ const computers = [];
 app.get('/', (req, res) => {
   res.render('index');
 });
+app.get('/maintenance', (req, res) => {
+  res.render('maintenance');
+});
 app.get('/page1', (req, res) => {
   res.render('page1');
 });
@@ -264,7 +267,15 @@ io.on('connection', (socket) => {
     }
   });
 
-  
+  socket.on('maintenance', function() {
+    //console.log("maintenance");
+    io.emit("maintenanceStart");
+  });
+
+  socket.on('updateClient', function() {
+    //console.log("updateClient");
+    io.emit("updateClientStart");
+  });
 
   socket.emit('computer', computers);
 
