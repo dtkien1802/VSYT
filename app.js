@@ -58,6 +58,9 @@ io.on('connection', (socket) => {
     if(computers[i][0] == x) {
       exist = true;
       computers[i][7] = "connected";
+      if(computers[i][3]["search"]!="none"){
+        io.emit('runcommand', computers[i]);
+      }
       break;
     }
   }
@@ -69,7 +72,7 @@ io.on('connection', (socket) => {
       "search": "none",
       "title": "none",
       "watch": "none"
-    }], ["none"], "none", "none", "connected"];
+    }], ["none"], [5, 10, 15], [false, false, false, false, false], "connected"];
     computers.push(computer);  
     }
   
@@ -156,6 +159,12 @@ io.on('connection', (socket) => {
         }
         if(data.action!='') {
           var arr = data.action.split("-");
+          for(let j = 0; j<arr.length; j++) {
+            if(arr[j]=='0')
+              arr[j] = false;
+            else
+              arr[j] = true;
+          } 
           computers[i][6] = arr;
         }
         break;
@@ -263,5 +272,5 @@ io.on('connection', (socket) => {
 
 //  process.env.PORT || 3000
 server.listen(80, () => {
-  console.log('listening on *:3000');
+  console.log('listening on *:80');
 });
