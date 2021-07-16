@@ -267,9 +267,9 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('maintenance', function() {
+  socket.on('restartClient', function() {
     //console.log("maintenance");
-    io.emit("maintenanceStart");
+    io.emit("restartStart");
   });
 
   socket.on('updateClient', function() {
