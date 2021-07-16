@@ -53,7 +53,6 @@ io.on('connection', (socket) => {
   socket.on("name", function(x) {
     console.log("computer: "+x);
   
-  var clientIp = socket.request.connection.remoteAddress.substring(7);
   let exist = false;
 
   //check if computer exist in list, if already, just change status to "connected"
