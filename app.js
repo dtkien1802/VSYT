@@ -60,8 +60,7 @@ io.on('connection', (socket) => {
     if(computers[i][0] == x) {
       exist = true;
       computers[i][7] = "connected";
-      if(computers[i][3].search!="none"){
-        console.log(computers[i][3]);
+      if(computers[i][3][0].search!="none"){
         io.emit('runcommand', computers[i]);
       }
       break;
