@@ -7,6 +7,8 @@ const io = new Server(server);
 
 app.set('view engine', 'ejs');
 
+app.use(express.static(__dirname + '/public'));
+
 const computers = [];
 
 app.get('/', (req, res) => {
@@ -179,8 +181,9 @@ io.on('connection', (socket) => {
 
   //comment input
   socket.on('updateComment', function(data) {
-    var arr = data.split("\n");
+    var arr = data.value.split("\n");
     for(i=0; i<computers.length; i++) {
+      if(computers[i][0].substr(0, 5) == data.system)
         computers[i][4] = arr;
     }
   });
@@ -201,68 +204,74 @@ io.on('connection', (socket) => {
   //username-password input
   socket.on('accountfile', function(res) {
     let n = computers.length;
-    if(res.length<computers.length)
-      n = res.length;
+    let j = 0; 
     for(let i=0; i<n; i++) {
-      var pair = res[i].split("|");
-      computers[i][1] = pair[0];
-      computers[i][2] = pair[1];
+      if(computers[i][0].substr(0, 5) == res.system) {
+        var pair = res.value[j].split("|");
+        computers[i][1] = pair[0];
+        computers[i][2] = pair[1];
+        j++;
+      }
     }
   });
 
   //keyword-videotitle-% input
   socket.on('videofile', function(res) {
+    console.log(res.value[0].split("\r\n"));
     let n = computers.length;
-    if(res.length<computers.length)
-      n = res.length;
     /// loop through each computer
+    let k=0;
     for(let i=0; i<n; i++) {
-      var list = res[i].split("\r\n");
-      var array = [];
-      console.log(list);
-      // loop through each line
-      for(let j=0; j<list.length; j++){
-        var pair = list[j].split(";");
+      if(computers[i][0].substr(0, 5) == res.system) {
+        var list = res.value[k].split("\r\n");
+        k++;
+        var array = [];
+        console.log(list);
+        // loop through each line
+        for(let j=0; j<list.length; j++){
+          var pair = list[j].split(";");
 
-          var obj = {
-            "search": pair[0],
-            "title": pair[1],
-            "watch": pair[2]
-          }
-          array.push(obj);
-        //console.log(obj);
+            var obj = {
+              "search": pair[0],
+              "title": pair[1],
+              "watch": pair[2]
+            }
+            array.push(obj);
+          //console.log(obj);
+        }
+        //console.dir("Hello" + array);
+        computers[i][3] = array;
       }
-      //console.dir("Hello" + array);
-      computers[i][3] = array;
     }
   });
 
   //time input
   socket.on('timeFile', function(res) {
     let n = computers.length;
-    if(res.length<computers.length)
-      n = res.length;
+    let j=0;
     for(let i=0; i<n; i++) {
-      var pair = res[i].split("-");
-      computers[i][5] = pair;
+      if(computers[i][0].substr(0, 5) == res.system) {
+        var pair = res.value[j].split("-");
+        j++;
+        computers[i][5] = pair;
+      }
     }
   });
 
   //action input
   socket.on('actionFile', function(res) {
     let n = computers.length;
-    if(res.length<computers.length)
-      n = res.length;
+    let k=0;
     for(let i=0; i<n; i++) {
-      var arr = res[i].split("-");
-      for(let j=0; j<arr.length; j++) {
-        if(arr[j]=='0')
-          arr[j]=false;
-        else
-          arr[j]=true;
-        //console.log(arr);
+      if(computers[i][0].substr(0, 5) == res.system) {
+        var arr = res.value[k].split("-");
+        k++;
+        for(let j=0; j<arr.length; j++) {
+          if(arr[j]=='0')   arr[j]=false;
+          else              arr[j]=true;
+        }
+        computers[i][6] = arr;
       }
-      computers[i][6] = arr;
     }
   });
 
@@ -274,6 +283,24 @@ io.on('connection', (socket) => {
   socket.on('updateClient', function() {
     //console.log("updateClient");
     io.emit("updateClientStart");
+  });
+
+  socket.on('stopSystem', function(x) {
+    console.log('stop '+ x);
+    io.emit('stopnow', x);
+  });
+
+  socket.on('stopall', function() {
+    io.emit('stopnow', 'all');
+  })
+
+  socket.on('runSystem', function(x) {
+    for(let i=0; i<computers.length; i++) {
+      if(x == computers[i][0].substr(0, 5)){
+        io.emit('runcommand', computers[i]);
+        console.log("Hello"+computers[i]);
+      }
+    }
   });
 
   socket.emit('computer', computers);

@@ -6,8 +6,10 @@
         <div class="container mb-5 mt-5">
             <div class="text-center">
                 <h1>CONFIGURATION PAGE</h1>
+                <h2 class="systemName" id="systemName"></h2>
             </div>
         </div>
+
         <%- include('./partials/nav.ejs') %>
             <%- include('./partials/inputField.ejs') %>
 
@@ -29,14 +31,20 @@
                 </div>
 
     </body>
+    
+    <script id="identifySystem" type="text/javascript" src = "identifySystem.js" system="NET01"></script>
+
+    <script id="communicate" type="text/javascript" src = "communicate.js"></script>
+
     <script src="/socket.io/socket.io.js"></script>
+
     <script>
         var socket = io();
         //get the list
         socket.on('computer', function (computers) {
             for (let i = 0; i < computers.length; i++) {
                 //console.log(computers[i][0].substring(0, 5));
-                if (computers[i][0].substring(0, 5) == "NET01") {
+                if (computers[i][0].substring(0, 5) == document.getElementsByClassName("systemName")[0].innerHTML) {
                     var table = document.getElementById("myTable");
                     var row = table.insertRow(-1);
                     var computerIP = row.insertCell(0);
@@ -71,6 +79,5 @@
             }
         });
     </script>
-    <%- include('./partials/communicate.ejs') %>
 
 </html>
