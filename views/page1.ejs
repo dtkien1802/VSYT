@@ -69,12 +69,12 @@
                     //[ip, username, password, videolist, comment, option, status]
                     username.innerHTML = "<p id=\"curusername" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][1] + "</p><input class=\"col-sm-12\" id=\"username" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\">";
                     password.innerHTML = "<p id=\"curpassword" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][2] + "</p><input class=\"col-sm-12\" id=\"password" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\">";
-                    videoList.innerHTML = "<p id=\"curlist" + computers[i][0] + "\" class=\"col-sm-12\">" + list + "</p>" + "<textarea class=\"col-sm-12\" id=\"list" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\"></textarea>";
-                    comment.innerHTML = "<p id=\"curcomment" + computers[i][0] + "\" class=\"col-sm-12\">" + commentlist + "</p><textarea class=\"col-sm-12\" id=\"comment" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\"></textarea>";
+                    videoList.innerHTML = "<p id=\"curlist" + computers[i][0] + "\" class=\"ovrfl col-sm-12\">" + list + "</p>" + "<textarea class=\"col-sm-12\" id=\"list" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\"></textarea>";
+                    comment.innerHTML = "<p id=\"curcomment" + computers[i][0] + "\" class=\"ovrfl col-sm-12\">" + commentlist + "</p><textarea class=\"col-sm-12\" id=\"comment" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\"></textarea>";
                     option.innerHTML = "<p id=\"curoption" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][6] + "</p><textarea class=\"col-sm-12\" id=\"option" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\"></textarea>";
                     time.innerHTML = "<p id=\"curtime" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][5] + "</p><input class=\"col-sm-12\" id=\"time" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\">"
-                    status.innerHTML = "<p id=\"status" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][7] + "</p>";
-                    button.innerHTML = "<button class=\"col-12\" id=\"" + computers[i][0] + "\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"col-12\" id=\"" + computers[i][0] + "\"onclick=\"run(this.id)\">Chạy!</button><button id=\"" + computers[i][0] + "\" onclick=\"stop(this.id)\" class=\"col-12\">Dừng</button>"
+                    status.innerHTML = "<p id=\"status" + computers[i][0] + "\" class=\"ovrfl col-sm-12\">" + computers[i][7] + "</p>";
+                    button.innerHTML = "<button class=\"btn btn-primary col-12\" id=\"" + computers[i][0] + "\"onclick=\"update(this.id)\">Cập nhật</button><button class=\"btn btn-success col-12\" id=\"" + computers[i][0] + "\"onclick=\"run(this.id)\">Chạy!</button><button id=\"" + computers[i][0] + "\" onclick=\"stop(this.id)\" class=\"btn btn-danger col-12\">Dừng</button>"
                 }
             }
         });
