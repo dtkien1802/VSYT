@@ -1,20 +1,20 @@
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: rgb(125, 132, 145);
+    background-color: rgb(202, 202, 202);
     border-radius: 10px;
 }
    
 ::-webkit-scrollbar-thumb {
-    background: rgb(0, 173, 181); 
+    background: rgb(124, 124, 124); 
     border-radius: 10px;
 }
   
 ::-webkit-scrollbar-thumb:hover {
-    background: rgb(1, 139, 146); 
+    background: rgb(77, 77, 77); 
 }
 
 .ovrfl {
