@@ -27,20 +27,22 @@
         var socket = io();
         //get the list
         socket.on('computer', function (computers) {
+            let k=1;
             for (let i = 0; i < computers.length; i++) {
                 //console.log(computers[i][0].substring(0, 5));
                 if (computers[i][0].substring(0, 5) == document.getElementsByClassName("systemName")[0].innerHTML) {
                     var table = document.getElementById("myTable");
                     var row = table.insertRow(-1);
-                    var computerIP = row.insertCell(0);
-                    var username = row.insertCell(1);
-                    var password = row.insertCell(2);
-                    var videoList = row.insertCell(3);
-                    var comment = row.insertCell(4);
-                    var option = row.insertCell(5);
-                    var time = row.insertCell(6);
-                    var status = row.insertCell(7);
-                    var button = row.insertCell(8);
+                    var index = row.insertCell(0);
+                    var computerIP = row.insertCell(1);
+                    var username = row.insertCell(2);
+                    var password = row.insertCell(3);
+                    var videoList = row.insertCell(4);
+                    var comment = row.insertCell(5);
+                    var option = row.insertCell(6);
+                    var time = row.insertCell(7);
+                    var status = row.insertCell(8);
+                    var button = row.insertCell(9);
                     computerIP.innerHTML = computers[i][0];
                     let list = "";
                     for (let j = 0; j < computers[i][3].length; j++) {
@@ -51,6 +53,8 @@
                     for (let j = 0; j < computers[i][4].length; j++) {
                         commentlist = commentlist  + computers[i][4][j] + "<br>";
                     }
+                    index.innerHTML = k;
+                    k++;
                     //[ip, username, password, videolist, comment, option, status]
                     username.innerHTML = "<p id=\"curusername" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][1] + "</p><input class=\"col-sm-12\" id=\"username" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\">";
                     password.innerHTML = "<p id=\"curpassword" + computers[i][0] + "\" class=\"col-sm-12\">" + computers[i][2] + "</p><input class=\"col-sm-12\" id=\"password" + computers[i][0] + "\" type=\"text\" autocomplete=\"off\">";
